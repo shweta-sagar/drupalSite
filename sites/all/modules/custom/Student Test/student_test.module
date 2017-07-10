@@ -1,0 +1,54 @@
+<?php
+
+function student_test_menu(){
+  $menu['abc/%'] = array(
+    'title' => 'shweta',
+    'page callback' => 'srijan_test', //function name
+    'page arguments' => array(1,date("d/m/Y")), //function arguments
+    'access callback' => TRUE,  
+    
+  );
+  
+  return $menu;
+}
+
+function srijan_test($x,$mydate) 
+{
+   echo 'Hello '.$x.'<br/>today is '.$mydate;
+}
+
+function student_test_form_alter(&$form, &$form_state, $form_id) {
+  switch ($form_id) {
+    case 'student_node_form':
+      $form['#validate'][] = 'student_validation';
+      break;
+  }
+  // _dbg($form,1);
+}
+
+function student_validation(&$form, &$form_state) {
+  // _dbg($form_state,1); 
+  if (!preg_match('/^[A-Z0-9-]+$/', $form_state['values']['title'])) {
+    form_error($form['title'], 'Not a valid Value');
+  }
+
+  if (!preg_match('/^[A-Z]+$/', substr($form_state['values']['title'], 0, 3))){
+    form_error($form['title'], 'First three character must be character.');
+  }
+  if(!preg_match('/^[A-Z0-9-]+$/',substr($form_state['values']['title'],3,1)))
+  {
+    form_error($form['title'],'Fourth charcter must be a -');
+  }
+ }
+
+
+
+function _dbg($var, $flag = 0) {
+  print '<pre>'; print_r($var); print '</pre>';
+  if ($flag) {
+    die();
+  }
+}
+
+
+

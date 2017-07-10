@@ -1,0 +1,8 @@
+name = student
+description = 'This module help to alter or updates student data'
+package = Student-test
+
+version = 7.1.0
+core = 7.x
+#project = drupal
+
